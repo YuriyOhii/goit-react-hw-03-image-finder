@@ -7,20 +7,27 @@ import {
 } from './Searchbar.styled';
 import { LuSearch } from 'react-icons/lu';
 
-export const Searchbar = props => {
+export const Searchbar = ({ onSubmit }) => {
+  const handleSubmit = e => {
+    e.preventDefault();
+    const query = e.target.elements.query.value;
+    onSubmit(query);
+  };
+
   return (
     <SearchbarHeader>
-      <SearchForm>
+      <SearchForm onSubmit={handleSubmit}>
         <SearchFormBtn type="submit">
           <span>
-            <LuSearch/>
+            <LuSearch />
           </span>
         </SearchFormBtn>
 
         <SearchFormInput
           type="text"
-          autocomplete="off"
-          autofocus
+          name="query"
+          autoComplete="off"
+          autoFocus
           placeholder="Search images and photos"
         />
       </SearchForm>
@@ -28,4 +35,6 @@ export const Searchbar = props => {
   );
 };
 
-Searchbar.propTypes = {};
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+};

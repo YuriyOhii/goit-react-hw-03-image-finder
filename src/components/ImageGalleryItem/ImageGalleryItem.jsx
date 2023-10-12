@@ -6,10 +6,11 @@ import { Modal } from 'components/Modal';
 export class ImageGalleryItem extends PureComponent {
   state = {};
   render() {
+    const { image:{webformatURL, largeImageURL, tags } } = this.props
     return (
       <>
-        <Image src="" alt="" />
-        {false && <Modal />}
+        <Image src={webformatURL} alt={tags} />
+        {false && <Modal bigImage={largeImageURL} tag={tags}/>}
       </>
     );
   }
