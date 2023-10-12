@@ -1,16 +1,19 @@
-export const App = () => {
-  return (
-    <div
-      style={{
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        fontSize: 40,
-        color: '#010101'
-      }}
-    >
-      React homework template
-    </div>
-  );
-};
+import { PureComponent } from 'react';
+import { Searchbar } from './Searchbar';
+import { ImageGallery } from './ImageGallery';
+import { Loader } from './Loader';
+import { Button } from './Button';
+import { Layout } from './Layout';
+
+export class App extends PureComponent {
+  render() {
+    return (
+      <Layout>
+        <Searchbar />
+        <ImageGallery />
+        <Loader />
+        <Button />
+      </Layout>
+    );
+  }
+}
