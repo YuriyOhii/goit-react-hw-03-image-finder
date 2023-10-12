@@ -1,10 +1,14 @@
-import React from 'react'
-import PropTypes from 'prop-types'
-import {  } from './Modal.styled'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Overlay, ModalW } from './Modal.styled';
 export const Modal = props => {
   return (
-    <div>Modal</div>
-  )
-}
+    <Overlay class="overlay">
+      <ModalW class="modal">
+        <img src="" alt="" />
+      </ModalW>
+    </Overlay>
+  );
+};
 
-Modal.propTypes = {}
+Modal.propTypes = {};

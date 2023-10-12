@@ -9,6 +9,7 @@ const theme = {
     grey: "#212121",
     white: "white",
     blue: "#3f51b5",
+    hoveredBlue: "#303f9f",
   },
   spacing: value => `${value * 4}px`,
 };
