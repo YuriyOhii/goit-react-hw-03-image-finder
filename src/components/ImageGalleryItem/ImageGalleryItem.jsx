@@ -4,13 +4,46 @@ import { Image } from './ImageGalleryItem.styled';
 import { Modal } from 'components/Modal';
 
 export class ImageGalleryItem extends PureComponent {
-  state = {};
+  static propTypes = {
+    image: PropTypes.shape({
+      webformatURL: PropTypes.string.isRequired,
+      largeImageURL: PropTypes.string.isRequired,
+      tags: PropTypes.string.isRequired,
+    }),
+  };
+  state = {
+    isModalOpen: false,
+  };
+  componentDidMount() {
+    window.addEventListener('keydown', this.onEscClose);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.onEscClose);
+  }
+
+  onEscClose = e => {
+    if (e.code === 'Escape') this.closeModal();
+  };
+
+  closeModal = () => this.setState({ isModalOpen: false });
+
+  handleImageClick = () => this.setState({ isModalOpen: true });
   render() {
-    const { image:{webformatURL, largeImageURL, tags } } = this.props
+    const {
+      image: { webformatURL, largeImageURL, tags },
+    } = this.props;
+    const { isModalOpen } = this.state;
     return (
       <>
-        <Image src={webformatURL} alt={tags} />
-        {false && <Modal bigImage={largeImageURL} tag={tags}/>}
+        <Image onClick={this.handleImageClick} src={webformatURL} alt={tags} />
+        {isModalOpen && (
+          <Modal
+            bigImage={largeImageURL}
+            tag={tags}
+            onClick={this.closeModal}
+          />
+        )}
       </>
     );
   }
