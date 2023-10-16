@@ -1,10 +1,17 @@
-import React from 'react'
-// import PropTypes from 'prop-types'
-// import {  } from './Loader.styled'
-export const Loader = props => {
-  return (
-    <div>Loader</div>
-  )
-}
+import React from 'react';
+import { Spinner } from './Loader.styled';
+import { Audio } from 'react-loader-spinner';
 
-// Loader.propTypes = {}
+export const Loader = () => {
+  return (
+    <Spinner>
+      <Audio
+        height="80"
+        width="80"
+        radius="9"
+        color="green"
+        ariaLabel="loading"
+      />
+    </Spinner>
+  );
+};
