@@ -14,17 +14,16 @@ export class App extends PureComponent {
     images: [],
     error: null,
     isLoading: false,
+    totalHits: 0,
   };
 
-  async componentDidUpdate(_, pS) {
+  async componentDidUpdate(prevProps, prevState) {
     const { per_page, query, page } = this.state;
-    if (pS.query !== query || pS.page !== page) {
+    if (prevState.query !== query || prevState.page !== page) {
       try {
-        if (pS.query !== query && page !== 1)
-          return this.setState(() => ({ images: [], page: 1 }));
         this.setState(() => ({ isLoading: true, error: null }));
-        const images = await getGalleryImages({ per_page, query, page });
-        this.setState(s => ({ images: [...s.images, ...images] }));
+        const {hits, totalHits} = await getGalleryImages({ per_page, query, page });
+        this.setState(state => ({ images: [...state.images, ...hits], totalHits }));
       } catch (error) {
         this.setState({ error });
       } finally {
@@ -34,15 +33,16 @@ export class App extends PureComponent {
   }
 
   getQuery = query => {
-    this.setState({ query });
+    this.setState({ query, images: [], page: 1  });
   };
 
   changePage = () => {
-    this.setState(s => ({ page: s.page + 1 }));
+    this.setState(state => ({ page: state.page + 1 }));
   };
 
   render() {
-    const { images, isLoading, error } = this.state;
+    const { images, isLoading, error, totalHits, per_page, page} = this.state;
+    const showBtnLoadMore = Math.ceil(totalHits / per_page) > page
     return (
       <Layout>
         <Searchbar onSubmit={this.getQuery} />
@@ -50,7 +50,7 @@ export class App extends PureComponent {
         {images.length > 0 && <ImageGallery images={images} />}
 
         {isLoading && <Loader />}
-        {images.length > 0 && <Button onClick={this.changePage} />}
+        {showBtnLoadMore > 0 && images.length > 0 && <Button onClick={this.changePage} />}
       </Layout>
     );
   }

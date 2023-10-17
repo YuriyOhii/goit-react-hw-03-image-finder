@@ -14,18 +14,7 @@ export class ImageGalleryItem extends PureComponent {
   state = {
     isModalOpen: false,
   };
-  componentDidMount() {
-    window.addEventListener('keydown', this.onEscClose);
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('keydown', this.onEscClose);
-  }
-
-  onEscClose = e => {
-    if (e.code === 'Escape') this.closeModal();
-  };
-
+ 
   closeModal = () => this.setState({ isModalOpen: false });
 
   handleImageClick = () => this.setState({ isModalOpen: true });
